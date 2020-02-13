@@ -1,4 +1,4 @@
-function [K, Krand]=calculateRipleysK(NSCs, D, Dsp)
+function calculateRipleysK(NSCs, D, Dsp)
 
 %% calculate area of hemispheres via triangulation
 tri = delaunay(NSCs(:,1:2));
@@ -29,7 +29,7 @@ for i = 1:20
         Drand = D(sPhase1Ids,randCellNrs);
 
     end
-    Krand = [Krand; ripleysK(D,Drand,A,bCells,sPhase1Ids)];
+    KcsrSC = [KcsrSC; ripleysK(D,Drand,A,bCells,sPhase1Ids)];
 end
 end
 %% 
