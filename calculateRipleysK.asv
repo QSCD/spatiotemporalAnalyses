@@ -1,4 +1,4 @@
-function calculateRipleysK(NSCs, D, Dsp)
+%function [K, Krand]=calculateRipleysK(NSCs, D, DsP)
 
 %% calculate area of hemispheres via triangulation
 tri = delaunay(NSCs(:,1:2));
@@ -14,26 +14,39 @@ cp = 0.5*cross(v1,v2);
 %Surface area A of the entire surface is calculated as the sum of the areas of the individual triangles
 A = sum(sqrt(dot(cp, cp, 2)));
 
-sP1count=size(Dsp,1);
-sP2count=size(Dsp,2);
+sP1count=size(DsP,1);
+sP2count=size(DsP,2);
 spatial = issymmetric(D);
-K=ripleysK(D,DsP,A,bCells,sPhase1Ids);
+K=discreteRK(D,DsP,A,bCells,sPhase1Ids);
 %% randomly sampling for comparison to observed values
+Krand=[];
 for i = 1:20
     if spatial
         randCellNrs = datasample(nonSPhase1Ids,sP1count,'Replace',false);
         Drand = D(randCellNrs,randCellNrs);
-        
+        Krand = [Krand; discreteRK(D,Drand,A,bCells,randCellNrs)];
     else %spatiotemporal
         randCellNrs = datasample(nonSPhase1Ids,sP2count,'Replace',false);
         Drand = D(sPhase1Ids,randCellNrs);
-
+        Krand = [Krand; discreteRK(D,Drand,A,bCells,sPhase1Ids)];
     end
-    KcsrSC = [KcsrSC; ripleysK(D,Drand,A,bCells,sPhase1Ids)];
+    
 end
-end
-%% 
-function K=ripleysK(D,DsP,A,bCells,sPhase1Ids)
+t=1:150;
+figure
+plot(t,K,'k','lineWidth',2)
+hold on
+plot(t,mean(Krand),'k')
+plot(t,quantile(Krand,0.95),'k--')
+plot(t,quantile(Krand,0.05),'k--')
+xlabel('Radius [\mum]','Fontsize', fs)
+ylabel('Dis','Fontsize', fs)
+legend('Observed','Random sampling', '95% envelope','Location','northwest');
+hold off
+set(gca,'FontSize',16);
+%end
+%%
+function K=discreteRK(D,DsP,A,bCells,sPhase1Ids)
 
 K =[];
 maxT = 150;
@@ -41,27 +54,24 @@ N1 = size(DsP,1);
 N2=size(DsP,2);
 lambda = N1/A;
 tStep = 1;
-
+DsP(DsP==0)=Inf;
 for t = 1:tStep:maxT
     r = 0;
     for j =1: N1
-        row = D(j,:);
+        row = DsP(j,:);
         cut = 1;
-
-        if min(Dall(bCells,sPhase1Ids(j))) < t            
+        
+        if min(D(bCells,sPhase1Ids(j))) < t
             R = t;
-            h=R-min(Dall(bCells,sPhase1Ids(j)));
+            h=R-min(D(bCells,sPhase1Ids(j)));
             %area of segment
             A2=R^2* acos(1-h/R)-(R-h)*sqrt(2*R*h-h^2);
             cut = (pi*R^2-A2)/(pi*R^2);
-
+            
         end
-        correctionTerm = 1;
-        if ~issymmetric(round(D))
-           correctionTerm =0; 
-        end
+        
         % distances lower t but exclude self dist
-       r = r + (sum(row < t) -correctionTerm)/cut; 
+        r = r + (sum(row < t))/cut;
     end
     K = [K (r/N2)/lambda];
 end
