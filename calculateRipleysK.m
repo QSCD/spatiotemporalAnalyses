@@ -1,4 +1,4 @@
-%function [K, Krand]=calculateRipleysK(NSCs, D, DsP)
+function [K, Krand]=calculateRipleysK(NSCs, D, DsP)
 
 %% calculate area of hemispheres via triangulation
 tri = delaunay(NSCs(:,1:2));
@@ -44,7 +44,7 @@ ylabel('Discrete Ripley''s K','Fontsize', 22)
 legend('Observed','Random sampling', '95% envelope','Location','northwest');
 hold off
 set(gca,'FontSize',22);
-%end
+end
 %%
 function K=discreteRK(D,DsP,A,bCells,sPhase1Ids)
 
@@ -76,6 +76,6 @@ for t = 1:tStep:maxT
     K = [K (r/N2)/lambda];
 end
 
-t = 1:tStep:maxT;
+
 
 end
