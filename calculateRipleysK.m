@@ -16,7 +16,7 @@ A = sum(sqrt(dot(cp, cp, 2)));
 
 sP1count=size(DsP,1);
 sP2count=size(DsP,2);
-spatial = issymmetric(D);
+spatial = issymmetric(DsP);
 K=discreteRK(D,DsP,A,bCells,sPhase1Ids);
 %% randomly sampling for comparison to observed values
 Krand=[];
@@ -32,18 +32,6 @@ for i = 1:20
     end
     
 end
-t=1:150;
-figure
-plot(t,K,'k','lineWidth',2)
-hold on
-plot(t,mean(Krand),'k')
-plot(t,quantile(Krand,0.95),'k--')
-plot(t,quantile(Krand,0.05),'k--')
-xlabel('Radius [\mum]','Fontsize', 22)
-ylabel('Discrete Ripley''s K','Fontsize', 22)
-legend('Observed','Random sampling', '95% envelope','Location','northwest');
-hold off
-set(gca,'FontSize',22);
 end
 %%
 function K=discreteRK(D,DsP,A,bCells,sPhase1Ids)
@@ -52,7 +40,7 @@ K =[];
 maxT = 150;
 N1 = size(DsP,1);
 N2=size(DsP,2);
-lambda = N1/A;
+lambda = N2/A;
 tStep = 1;
 DsP(DsP==0)=Inf;
 for t = 1:tStep:maxT
@@ -73,7 +61,7 @@ for t = 1:tStep:maxT
         % distances lower t but exclude self dist
         r = r + (sum(row < t))/cut;
     end
-    K = [K (r/N2)/lambda];
+    K = [K (r/N1)/lambda];
 end
 
 
