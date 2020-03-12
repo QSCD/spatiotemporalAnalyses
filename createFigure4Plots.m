@@ -5,7 +5,7 @@ data = xlsread(sprintf('%s\\Table1',inputFolder));
 figure('OuterPosition',[174 624 576 513]);
 % generate two vectores with tps and groups for plotting
 tps = [repmat(9,4,1);repmat(18,4,1);repmat(24,11,1)];
-gs=[repmat(1,4,1);repmat(2,4,1);repmat(3,11,1)];
+gs=[ones(4,1);repmat(2,4,1);repmat(3,11,1)];
 
 % extract DLS proportions
 DLS=data([1:8,13:23],5)./data([1:8,13:23],2)*100;
@@ -13,7 +13,7 @@ DLS=data([1:8,13:23],5)./data([1:8,13:23],2)*100;
 groups = splitapply( @(x){x}, [DLS], (gs) );
 g = tps;
 % first plot the box plot to determine plot positions on x-axis
-h=boxplot(DLS,g,'colors','k','positions',[9,18,24]);
+boxplot(DLS,g,'colors','k','positions',[9,18,24]);
 
 hold on;
 % second plot single data points
@@ -46,7 +46,7 @@ gs=[repmat(1,4,1);repmat(2,11,1);repmat(3,4,1);repmat(4,4,1);repmat(5,5,1)];
 redivs=data([5:8,13:end],4)./data([5:8,13:end],2)*100;
 groups = splitapply( @(x){x}, [redivs], (gs) );
 g = tps;
-h=boxplot(redivs,g,'positions',[18,24,32,48,72],'colors','k');
+boxplot(redivs,g,'positions',[18,24,32,48,72],'colors','k');
 
 hold on;
 sh=plotSpread(gca,groups,'xValues',[18,24,32,48,72]);
@@ -73,7 +73,7 @@ set(gca,'FontSize',22);
 divs=data(:,2)./data(:,1)*100;
 figure;
 g = [zeros(length(divs), 1); ones(length(redivs), 1)];
-h=boxplot([divs;redivs],g,'colors','k','Width',0.7);
+boxplot([divs;redivs],g,'colors','k','Width',0.7);
 
 hold on;
 sh=plotSpread(gca,{divs,redivs});
@@ -86,5 +86,5 @@ ylim([0 27]);
 yticks([0,10,20]);
 yticklabels([0,10,20]);
 set(gca,'FontSize',22);
-[x,y]=kstest2(divs',redivs');
+[~,y]=kstest2(divs',redivs');
 sigstar([1,2],y);

@@ -55,6 +55,7 @@ load(sprintf('%s\preprocessedData\expData.mat',inputFolder))
  optionsCI = PestoOptions();
     optionsCI.mode = 'silent';
     pi32=parameters{32};
+    %pi32.S.par=pi32.S.par(:,(pi32.S.par(1,:)<300&pi32.S.par(1,:)>30));
     pi32=getParameterConfidenceIntervals(pi32,0.95,optionsCI);
     maxLStr=pi32.MS.par(2,1);
     maxLRad=pi32.MS.par(1,1);
@@ -62,27 +63,11 @@ load(sprintf('%s\preprocessedData\expData.mat',inputFolder))
     strengths(2) = pi32.CI.S(2,2);
     radii(1) = pi32.CI.S(1,1);
     radii(2) = pi32.CI.S(1,2);
-    figure;
-    scatter(pi32.S.par(1,:)',pi32.S.par(2,:)',0.5,[0.6,0.6,0.6]);
-    hold on;
-        hl=hline(1);
-hl.LineWidth=2;
-hl.Color='k';
-    hl.XData=[0,250];
-    ylabel('Strength')
-    xlabel('Radius [\mum]')
-    ylim([0.8,1.5])
-    xlim([0,250])
-    text(180,1.4,'\Deltat=32h','Color', 'k','FontSize',20)
 h=ploterr(maxLRad,maxLStr,{radii(1),radii(2)},{strengths(1),strengths(2)},'k.');
 
     h(1).MarkerSize=20;
     h(2).LineWidth=2;
-     h(3).LineWidth=2;
-set(gca,'FontSize',20)
 
-%% plot Figure 3CD
-plotParameterInference(parameters,1);
 %% calculate local spatial influences
 
 function inf = localInfluence(D, radius, strength)

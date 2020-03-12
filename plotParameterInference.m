@@ -41,13 +41,13 @@ end
     yfit=P.Fitted;
 h1=subplot(2,1,1);
 h=ploterr(xRange,maxLRad,[],{radii(:,1),radii(:,2)},'k.');
-
+hold on;
 if ~expData
     set(h(2),'Color',[.5,.5,.5])
 set(h(1),'Color',[.5,.5,.5])
     h(1).MarkerSize=20;
     h(2).LineWidth=2;
-hold on;
+
     h=ploterr(xRange(xRealCoords),maxLRad(xRealCoords),[],{radii(xRealCoords,1),radii(xRealCoords,2)},'k.');
 end
     h(1).MarkerSize=20;
@@ -88,7 +88,7 @@ plot(xRange,yfit,'k--','LineWidth',2);
 else
     plot(xRange(xRealCoords),yfit,'k--','LineWidth',2);
 end
-text(50,1.85,sprintf('p-value=%.2f',P.Coefficients.pValue),'FontSize',22);
+text(50,1.85,sprintf('p-value=%.4f',P.Coefficients.pValue),'FontSize',22);
 xlabel('Labelling interval \Deltat [h]')
 ylabel({'Strength'})
 xlim([-1,76])
