@@ -9,6 +9,6 @@ Raw data can be accessed from https://demo.openmicroscopy.org/webclient/?show=da
  >>and password: zebrafish  
  
  To reproduce results  
-- download the required data from some link
+- download the required data from https://hmgubox2.helmholtz-muenchen.de/index.php/s/Hyy2d4rQWdGfq3J
 - required software: MATLAB (R2019a)
 - usage of PESTO Toolbox (https://github.com/ICB-DCM/PESTO/)
