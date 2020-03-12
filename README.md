@@ -12,3 +12,10 @@ Raw image data can be accessed from https://demo.openmicroscopy.org/webclient/?s
 - download the required data from https://hmgubox2.helmholtz-muenchen.de/index.php/s/Hyy2d4rQWdGfq3J
 - required software: MATLAB (R2019a)
 - usage of PESTO Toolbox (https://github.com/ICB-DCM/PESTO/)
+
+1. Open the run.m file
+2. Either 
+<ul>
+<li><p> run the complete file to reproduce calculated subplots of all figures </p></li>
+<li><p> or choose and run the respective section to reproduce the subplots of one specific figure </p></li>
+</ul>
