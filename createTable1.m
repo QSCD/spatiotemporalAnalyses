@@ -3,6 +3,7 @@
 intervals={'9h','18h','24h','32h','48h','72h'};
 files = dir(inputFolder);
 counter=1;
+manualCorrection= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,9,10,2,0,2,5,0,1,2,1,1,0,0,1,4,0,0,1,1];
 xlswrite(sprintf('%s\\Table1.xlsx',outputFolder),{'Experiment','NSCs','T1 NSCs','T2 NSCs','NSC redivisions','DLS NSCs'},1,'A1');
 for  iv=1:numel(intervals)
     interval=intervals{iv};
@@ -13,7 +14,7 @@ for  iv=1:numel(intervals)
         
         xlswrite(sprintf('%s\\Table1.xlsx',outputFolder),...
             {sprintf('Interval %s H%i',interval,i),size(NSCs,1),size(sPhase1,1)+size(redivs,1)+size(DLS,1),size(sPhase2,1)+size(redivs,1)+size(DLS,1)...
-            size(redivs,1),size(DLS,1)},1,strcat('A',string(counter+1)))
+            size(redivs,1)-manualCorrection(counter),size(DLS,1)},1,strcat('A',string(counter+1)))
         counter=counter+1;
     end
 end
