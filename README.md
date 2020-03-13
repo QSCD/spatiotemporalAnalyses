@@ -8,11 +8,12 @@ Raw image data can be accessed from https://demo.openmicroscopy.org/webclient/?s
  >>with username: ValerioLupperger  
  >>and password: zebrafish  
  
- To reproduce results  
+Prerequisites
 - download the required data from https://hmgubox2.helmholtz-muenchen.de/index.php/s/Hyy2d4rQWdGfq3J
 - required software: MATLAB (R2019a)
 - usage of PESTO Toolbox (https://github.com/ICB-DCM/PESTO/)
 
+ To reproduce results  
 1. Add the spatiotemporalAnalyses folder to Matlab path
 2. Define your inputFolder
 3. Open the run.m file
