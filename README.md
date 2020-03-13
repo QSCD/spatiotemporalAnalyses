@@ -1,7 +1,7 @@
 # spatiotemporalAnalyses
 Scripts for the paper
 
-### Emergence of aggregated spatiotemporal division patterns from redividing neural stem cells
+### Aggregated spatio-temporal division patterns emerge from reoccurring divisions of neural stem cells
 by Valerio Lupperger, and Carsten Marr, and Prisca Chapouton
 
 Raw image data can be accessed from https://demo.openmicroscopy.org/webclient/?show=dataset-3749
