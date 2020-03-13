@@ -4,11 +4,11 @@ if ~exist('onlyCells','Var')
     onlyCells=0;
 end
 if ~onlyCells
-D=readmatrix(sprintf('%s\\matrix_%s.xlsx',folder,name));
+D=readmatrix(sprintf('%s/matrix_%s.xlsx',folder,name));
 else
     D=[];
 end
-cells=readmatrix(sprintf('%s\\cells_%s.xlsx',folder,name));
+cells=readmatrix(sprintf('%s/cells_%s.xlsx',folder,name));
 NSCs=cells;
 sPhase1=cells(cells(:,4)==1,1:3);
 sPhase2=cells(cells(:,4)==2,1:3);

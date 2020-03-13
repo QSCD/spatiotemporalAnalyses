@@ -1,10 +1,12 @@
-%createFigure2Plots
-inputFolder='F:\Brains'; %modify
+function createFigure2Plots(inputFolder)
+%%inputFolder='F:/Brains'; %modify
 %% load data
+fprintf('Creating Figure 2 ...\n')
 rng(pi)
 [D,NSCs,sPhase1,sPhase2,~,redivs]=loadData('Interval_32h_H1',inputFolder);
 
 %% Plot Figure 2E
+fprintf('Creating Figure 2E ...\n')
 figure('Position',[200,200,600,700]); % create figure
 scatter(NSCs(:,1), NSCs(:,2),5,'MarkerEdgeColor','none','MarkerFaceColor',[0.75,0.75,0.75]); % scatter NSCs
 hold on;
@@ -16,6 +18,7 @@ legend boxoff
 camroll(-90) % to adapt to the angle in the Figure
 
 %% Plot Figure 2F
+fprintf('Creating Figure 2F ...\n')
 figure('Position',[200,200,600,700]); % create figure
 scatter(NSCs(:,1), NSCs(:,2),5,'MarkerEdgeColor','none','MarkerFaceColor',[0.75,0.75,0.75]); % scatter NSCs
 hold on;
@@ -27,6 +30,7 @@ legend boxoff
 camroll(-90) % to adapt to the angle in the Figure
 
 %% Plot Figure 2G
+fprintf('Creating Figure 2G ...\n')
 figure('Position',[200,200,600,800]); % create figure
 scatter(NSCs(:,1), NSCs(:,2),5,'MarkerEdgeColor','none','MarkerFaceColor',[0.75,0.75,0.75]); % scatter NSCs
 hold on;
@@ -40,6 +44,7 @@ legend boxoff
 camroll(-90) % to adapt to the angle in the Figure
 
 %% Plot Figure 2H
+fprintf('Creating Figure 2H ...\n')
 sPhase1Ids=logical(ismember(NSCs(:,4),1)+ismember(NSCs(:,4),4));
 sPhase2Ids=ismember(NSCs(:,4),2);
 DsP=D(sPhase1Ids,sPhase2Ids);
@@ -64,13 +69,14 @@ set(gca,'FontSize',24);
 legend('Observed NSCs in S-phase','Random sampling','Location','northwest');
 
 %% Plot Figure 2I
+fprintf('Creating Figure 2I ...\n')
 rng(pi)
 figure('position',[100,100,1400,800]);
 hold on;
 %calculate discrete Ripley's K values
 %K = observed K values, Krand = K values from random sampling
-for i = 1:15
-    [D,NSCs,sPhase1,sPhase2,~,redivs]=loadData(sprintf('Interval_24h_H%i',i),inputFolder);
+for i = 1:4
+    [D,NSCs,sPhase1,sPhase2,~,redivs]=loadData(sprintf('Interval_32h_H%i',i),inputFolder);
     sPhase1Ids=logical(ismember(NSCs(:,4),1)+ismember(NSCs(:,4),4));
     sPhase2Ids=ismember(NSCs(:,4),2);
     DsP=D(sPhase1Ids,sPhase2Ids);

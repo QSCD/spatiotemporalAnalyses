@@ -1,9 +1,11 @@
-%createFigure1Plots
+function createFigure1Plots(inputFolder)
 %% load data
+fprintf('Creating Figure 1 ...\n')
 rng(37)
-[D,NSCs,sPhase1,~,~,~]=loadData('PCNA','F:\Brains');
+[D,NSCs,sPhase1,~,~,~]=loadData('PCNA',inputFolder);
 
 %% Plot Figure 1J
+fprintf('Creating Figure 1J ...\n')
 figure('Position',[200,200,600,700]); % create figure
 scatter(NSCs(:,1), NSCs(:,2),5,'MarkerEdgeColor','none','MarkerFaceColor',[0.75,0.75,0.75]); % scatter NSCs
 hold on;
@@ -14,6 +16,7 @@ legend('NSCs', 'NSCs in S-phase','FontSize',14) % define legend
 legend boxoff
 
 %% Plot Figure 1K
+fprintf('Creating Figure 1K ...\n')
 %create distance matrix between S-phase cells
 sPhase1Ids=ismember(NSCs(:,4),1);
 DsP=D(sPhase1Ids,sPhase1Ids);
