@@ -17,7 +17,7 @@ Raw image data can be accessed from https://demo.openmicroscopy.org/webclient/?s
 2. Define your inputFolder
 3. Open the run.m file
 4. Either 
-<ul>
-<li><p> run the complete file to reproduce calculated subplots of all figures </p></li>
-<li><p> or choose and run the respective section to reproduce the subplots of one specific figure </p></li>
-</ul>
+
+-  run the complete file to reproduce calculated subplots of all figures </p></li>
+-  or choose and run the respective section to reproduce the subplots of one specific figure </p></li>
+
