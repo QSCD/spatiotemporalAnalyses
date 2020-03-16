@@ -17,5 +17,8 @@ createFigure3Plots(inputFolder)
 %% create all Subplots of Figure 4
 createFigure4Plots(inputFolder)
 
+%% create all Subplots of Figure 5
+createFigure5Plots(inputFolder)
+
 %% create Table 1
 createTable1(inputFolder,outputFolder)

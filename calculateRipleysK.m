@@ -3,16 +3,16 @@ function [K, Krand]=calculateRipleysK(NSCs, D, DsP)
 %% calculate area of hemispheres via triangulation
 tri = delaunay(NSCs(:,1:2));
 bCells = bordersOfTriangulation(tri);%to check which cells need to be checked for edge correction
-sPhase1Ids=find(ismember(NSCs(:,4),[1,3,4]));
-nonSPhase1Ids=find(~ismember(NSCs(:,4),[1,3,4]));%ids to sample from
-P = NSCs(:,1:3);
-%Obtain the edges in each triangle formed by the 'delaunaytriangulation'
-v1 = P(tri(:,2), :) - P(tri(:,1), :);
-v2 = P(tri(:,3), :) - P(tri(:,2), :);
-%Calculating the cross product of the edges in each triangle of the surface
-cp = 0.5*cross(v1,v2);
-%Surface area A of the entire surface is calculated as the sum of the areas of the individual triangles
-A = sum(sqrt(dot(cp, cp, 2)));
+sPhase1Ids=find(ismember(NSCs(:,end),[1,3,4]));
+nonSPhase1Ids=find(~ismember(NSCs(:,end),[1,3,4]));%ids to sample from
+    P = NSCs(:,1:3);
+    %Obtain the edges in each triangle formed by the 'delaunaytriangulation'
+    v1 = P(tri(:,2), :) - P(tri(:,1), :);
+    v2 = P(tri(:,3), :) - P(tri(:,2), :);
+    %Calculating the cross product of the edges in each triangle of the surface
+    cp = 0.5*cross(v1,v2);
+    %Surface area A of the entire surface is calculated as the sum of the areas of the individual triangles
+    A = sum(sqrt(dot(cp, cp, 2)));
 
 sP1count=size(DsP,1);
 sP2count=size(DsP,2);

@@ -10,7 +10,7 @@ if expData
     inputs = {'1','9','18','24','32','48','72'};    
     xRange = cellfun(@str2num, inputs);
 else
-xRange = [6,9:3:75];
+xRange = [3,9:3:75];
 end
 %inputs = {'3','9','18','24','30','48','72'};
 
