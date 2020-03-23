@@ -77,12 +77,12 @@ fprintf('Creating Figure 4U ...\n')
 divs=data(:,2)./data(:,1)*100;
 figure;
 g = [zeros(length(divs), 1); ones(length(redivs), 1)];
-boxplot([divs;redivs],g,'colors','k','Width',0.7);
+boxplot([divs;redivs],g,'colors','k','Width',0.7); %plot it first for legend reasons
 
 hold on;
 sh=plotSpread(gca,{divs,redivs});
 set(sh{1},'color',[0.5,0.5,0.5],'markerSize',20);
-h=boxplot([divs;redivs],g,'colors','k','Width',0.7);
+h=boxplot([divs;redivs],g,'colors','k','Width',0.7); %replot it over boxes
 set(h,{'linew'},{2})
 ylabel({'Dividing NSCs [%]'},'FontSize',22)
 set(gca,'XTickLabel',{'Divisions','Re-divisions'},'FontSize',22)
