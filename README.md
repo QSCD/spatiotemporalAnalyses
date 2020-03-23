@@ -15,8 +15,8 @@ Prerequisites
 
  To reproduce results  
 1. Add the spatiotemporalAnalyses folder to Matlab path
-2. Define your inputFolder
-3. Open the run.m file
+2. Open the run.m file
+3. Define your inputFolder
 4. Either 
 
 -  run the complete file to reproduce calculated subplots of all figures </p></li>
