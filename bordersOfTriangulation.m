@@ -1,4 +1,7 @@
 function b = bordersOfTriangulation(tri)
+% returns points being at the border of triangulation by finding first
+% edges being only part of one triangle and the extracting the end points
+% of these edges
 uni =containers.Map();
 noUnique = containers.Map();
 tri = sort(tri,2);

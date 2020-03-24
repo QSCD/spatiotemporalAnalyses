@@ -1,7 +1,7 @@
 %%% run this script to plot all calculateable subplots of all figures
 %%% or run certain sections directly
-%%% just define the folder in which the matrix_interval_xy.xlsx files 
-%%% and cells_interval_xy.xlsx are located
+%%% just define the folder in which the matrix_interval_XX.xlsx files 
+%%% and cells_interval_XX.xlsx are located
 %%% additionally if you want to create table1 choose an output folder
 inputFolder = "D:/Nextcloud/spatialAnalysisData/Brains";
 outputFolder= inputFolder;

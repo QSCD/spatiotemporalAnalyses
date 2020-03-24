@@ -35,33 +35,37 @@ end
 end
 %%
 function K=discreteRK(D,DsP,A,bCells,sPhase1Ids)
+%%%
+%%% K: K value array
+%%% N1: number of S-phase 1 cells
+%%% N2: number of S-phase 2 cells
 
 K =[];
-maxT = 150;
 N1 = size(DsP,1);
 N2=size(DsP,2);
-lambda = N2/A;
-tStep = 1;
-DsP(DsP==0)=Inf;
-for t = 1:tStep:maxT
-    r = 0;
+DsP(DsP==0)=Inf; % make sure self self distances are not counted
+% iterate over increasing radii r
+for r = 1:1:150
+    k = 0;
+    %iterate over S-phase 1 cells
     for j =1: N1
         row = DsP(j,:);
-        cut = 1;
-        
-        if min(D(bCells,sPhase1Ids(j))) < t
-            R = t;
-            h=R-min(D(bCells,sPhase1Ids(j)));
-            %area of segment
-            A2=R^2* acos(1-h/R)-(R-h)*sqrt(2*R*h-h^2);
-            cut = (pi*R^2-A2)/(pi*R^2);
-            
+        edgeC = 1;
+        % check if edge correction is needed
+        if min(D(bCells,sPhase1Ids(j))) < r
+            % calculate the hight of the radial segment being outside A
+            h=r-min(D(bCells,sPhase1Ids(j)));
+            %area of radial segment outside A
+            A2=r^2* acos(1-h/r)-(r-h)*sqrt(2*r*h-h^2);
+            % calculate proportion of the circle being inside A
+            edgeC = (pi*r^2-A2)/(pi*r^2);            
         end
         
-        % distances lower t but exclude self dist
-        r = r + (sum(row < t))/cut;
+        % sum up distances closer than r
+        k = k + (sum(row < r))/edgeC;
     end
-    K = [K (r/N1)/lambda];
+    % add K value to K array
+    K = [K (k/N1)/(N2/A)];
 end
 
 
