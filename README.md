@@ -6,13 +6,13 @@ by Valerio Lupperger, Carsten Marr, and Prisca Chapouton
 
 Raw image data can be accessed from https://hmgubox2.helmholtz-muenchen.de/index.php/s/MBrLMra7wpj2qKn
  
-Prerequisites
+Prerequisites:
 - download the required data from https://hmgubox2.helmholtz-muenchen.de/index.php/s/Hyy2d4rQWdGfq3J
 - required software: 
   * MATLAB (R2019a) with Statistics and Machine Learning Toolbox
   * PESTO Toolbox (https://github.com/ICB-DCM/PESTO/)
 
- To reproduce results  
+ To reproduce results:  
 1. Add the spatiotemporalAnalyses folder to Matlab path
 2. Open the run.m file
 3. Define your inputFolder
