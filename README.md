@@ -4,9 +4,7 @@ Scripts for the paper
 ### Aggregated spatio-temporal division patterns emerge from reoccurring divisions of neural stem cells
 by Valerio Lupperger, Carsten Marr, and Prisca Chapouton
 
-Raw image data can be accessed from https://demo.openmicroscopy.org/webclient/?show=dataset-3749
- >>with username: ValerioLupperger  
- >>and password: zebrafish  
+Raw image data can be accessed from https://hmgubox2.helmholtz-muenchen.de/index.php/s/MBrLMra7wpj2qKn
  
 Prerequisites
 - download the required data from https://hmgubox2.helmholtz-muenchen.de/index.php/s/Hyy2d4rQWdGfq3J
