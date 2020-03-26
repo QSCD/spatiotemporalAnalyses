@@ -8,8 +8,9 @@ Raw image data can be accessed from https://hmgubox2.helmholtz-muenchen.de/index
  
 Prerequisites
 - download the required data from https://hmgubox2.helmholtz-muenchen.de/index.php/s/Hyy2d4rQWdGfq3J
-- required software: MATLAB (R2019a)
-- usage of PESTO Toolbox (https://github.com/ICB-DCM/PESTO/)
+- required software: 
+  * MATLAB (R2019a) with Statistics and Machine Learning Toolbox
+  * PESTO Toolbox (https://github.com/ICB-DCM/PESTO/)
 
  To reproduce results  
 1. Add the spatiotemporalAnalyses folder to Matlab path
