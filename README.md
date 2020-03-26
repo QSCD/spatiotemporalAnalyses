@@ -17,7 +17,6 @@ Prerequisites
 2. Open the run.m file
 3. Define your inputFolder
 4. Either 
-
--  run the complete file to reproduce calculated subplots of all figures </p></li>
--  or choose and run the respective section to reproduce the subplots of one specific figure </p></li>
+   * run the complete file to reproduce calculated subplots of all figures </p></li>
+   * or choose and run the respective section to reproduce the subplots of one specific figure </p></li>
 
