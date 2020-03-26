@@ -31,3 +31,30 @@ divLoc2= getMidpoints(div2);
 div1=allCells2(ismember(allCells2(:,2),div1(:,3)),[4,5,2,9]);
 divLoc1= getMidpoints(div1);
 gfp= allCells2(~ismember(allCells2(:,2),[div1(:,3);div2(:,3)]),[4,5]);
+end
+
+function divLoc=getMidpoints(divs)
+% calculates the midpoints of a doublet after division or returns the input
+% location in case the cell did not divide yet
+divLoc=[];
+secondCell=0;
+for i = 1:size(divs,1)
+    % if the first cell of the doublet was already processed the second
+    % cell is skipped
+    if secondCell
+        secondCell=0;
+        continue;
+    end
+    % check if last cell or single cell
+    if i<size(divs,1) && mod(divs(i,3),2)==1 && divs(i+1,3)- divs(i,3) ==1
+        % add the midpoint between this cell and the following neighboring
+        % doublet cell
+        divLoc(end+1).x=(divs(i,1)+divs(i+1,1))/2;
+        divLoc(end).y=(divs(i,2)+divs(i+1,2))/2;
+        secondCell=1;
+    else % single cell - just add input coordinates
+        divLoc(end+1).x=divs(i,1);
+        divLoc(end).y=divs(i,2);        
+    end   
+end
+end
