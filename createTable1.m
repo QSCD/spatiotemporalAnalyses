@@ -32,7 +32,10 @@ for  iv=1:numel(intervals)
         counter=counter+1;
     end
 end
+header={'Experiments','NSCs','T1 NSCs','T2 NSCs','NSC redivisions','DLS NSCs'};
 
-T = [cell2table(exps', 'VariableNames', {'Experiments'}),  array2table(data,'VariableNames',{'NSCs','T1 NSCs','T2 NSCs','NSC redivisions','DLS NSCs'})];
-writetable(T,sprintf('%s/Table1.xlsx',outputFolder),'Sheet',1,'Range','A1');
+T = [cell2table(exps'),  array2table(data)];
+%writetable(T,sprintf('%s/Table1.xlsx',outputFolder),'Sheet',1,'Range','A1');
+Tcell = [header; table2cell(T)];
+writecell(Tcell, sprintf('%s/Table1.xlsx',outputFolder))
 
