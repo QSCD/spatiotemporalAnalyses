@@ -47,10 +47,10 @@ set(gca,'FontSize',22);
 fprintf('Creating Figure 4T ...\n') % show progress
 figure('OuterPosition',[174 624 576 513]);
 % generate two vectores with tps and groups for plotting
-tps = [repmat(18,1,1);repmat(24,11,1);repmat(32,4,1);repmat(48,4,1);repmat(72,5,1)];
-gs=[ones(1,1);repmat(2,11,1);repmat(3,4,1);repmat(4,4,1);repmat(5,5,1)];
+tps = [repmat(18,4,1);repmat(24,11,1);repmat(32,4,1);repmat(48,4,1);repmat(72,5,1)];
+gs=[ones(4,1);repmat(2,11,1);repmat(3,4,1);repmat(4,4,1);repmat(5,5,1)];
 % extract re-dividing cell proportions
-redivs=data([6,13:end],4)./data([6,13:end],2)*100;
+redivs=data([5:8,13:end],4)./data([5:8,13:end],2)*100;
 groups = splitapply( @(x){x}, redivs, (gs) );
 
 % first plot the box plot to determine plot positions on x-axis
@@ -76,6 +76,8 @@ set(gca,'FontSize',22);
 %% 4U
 fprintf('Creating Figure 4U ...\n') % show progress
 divs=data(:,2)./data(:,1)*100;
+% extract re-dividing cell proportions
+redivs=data([6,13:14,16:end],4)./data([6,13:14,16:end],2)*100;
 figure;
 % create labels to plot divs and re-divs
 g = [zeros(length(divs), 1); ones(length(redivs), 1)];

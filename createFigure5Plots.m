@@ -40,14 +40,15 @@ DsP = D(end-numel(divLoc1)+1:end,end-numel(divLoc2)-numel(divLoc1)+1:end-numel(d
 
 % Plot K values
 r=1:150; % define radius steps
-K=K/1250;Krand=Krand/1250; % reduce numbers for nicer y-axis in plot.
+K=K/600;Krand=Krand/600; % reduce numbers for nicer y-axis in plot.
 figure('Position',[200,200,750,500]); % create figure
 plot(r,K,'k','lineWidth',2); %plot observd K value
 hold on; % allow more than one plot in the figure
 patch([r fliplr(r)], [quantile(Krand,0.05) fliplr(quantile(Krand,0.95))],...
     [0.5,0.5,0.5],'FaceAlpha',.5,'EdgeColor','k'); % plot sampled K CIs
 plot(r,mean(Krand),'k--','lineWidth',2) % plot mean of sampled K values
-% set axes labels and legend
+% set axes properties and legend
+xlim([0,100]);
 xlabel('Radius [\mum]','Fontsize', 24)
 ylabel('Discrete Ripley''s K','Fontsize', 24)
 legend('Simulated S-phase NSCs','Random sampling','Location', 'nw')
@@ -93,7 +94,7 @@ DsP = D(end-numel(divLoc1)+1:end,end-numel(divLoc2)-numel(divLoc1)+1:end-numel(d
 
 % Plot K values
 r=1:150; % define time steps
-K=K/1500;Krand=Krand/1500; % reduce numbers for nicer y-axis in plot.
+K=K/680;Krand=Krand/680; % reduce numbers for nicer y-axis in plot.
 
 figure('Position',[200,200,750,500]); % create figure
 plot(r,K,'k','lineWidth',2); %plot observd K value
@@ -101,7 +102,8 @@ hold on; % allow more than one plot in the figure
 patch([r fliplr(r)], [quantile(Krand,0.05) fliplr(quantile(Krand,0.95))],...
     [0.5,0.5,0.5],'FaceAlpha',.5,'EdgeColor','k'); % plot sampled K CIs
 plot(r,mean(Krand),'k--','lineWidth',2) % plot mean of sampled K values
-% set axes labels and legend
+% set axes properties and legend
+xlim([0,100]);
 xlabel('Radius [\mum]','Fontsize', 24)
 ylabel('Discrete Ripley''s K','Fontsize', 24)
 legend('Simulated S-phase NSCs','Random sampling','Location', 'nw')
