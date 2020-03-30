@@ -86,14 +86,14 @@ ylabel('Strength') % define y-label
 xlabel('Radius [\mum]') % define x-label
 ylim([0.8,1.5]) % set y limits
 xlim([0,250]) % set x limits
-text(180,1.4,'\Deltat=32h','Color', 'k','FontSize',20)  % include labelling interval as text
+text(180,1.4,'\Deltat=32h','Color', 'k','FontSize',24)  % include labelling interval as text
 % plot maximum likelihood values with CIs as error bars
 h=ploterr(maxLRad,maxLStr,{radiiCI(1),radiiCI(2)},{strengthsCI(1),strengthsCI(2)},'k.');
 h(1).MarkerSize=20;
-h(2).LineWidth=2;
-h(3).LineWidth=2;
+h(2).LineWidth=3;
+h(3).LineWidth=3;
 
-set(gca,'FontSize',20) % increase font size
+set(gca,'FontSize',24) % increase font size
 
 %% plot Figure 3CD
 fprintf('Creating Figure 3C and 3D ...\n') % show progress

@@ -17,10 +17,10 @@ rng(pi) % make plots reproducible
 %% Plot Figure 2E
 fprintf('Creating Figure 2E ...\n') % show progress
 figure('Position',[200,200,600,700]); % create figure
-scatter(NSCs(:,1), NSCs(:,2),5,'MarkerEdgeColor','none','MarkerFaceColor',[0.75,0.75,0.75]); % scatter NSCs
+scatter(NSCs(:,1), NSCs(:,2),8,'MarkerEdgeColor','none','MarkerFaceColor',[0.75,0.75,0.75]); % scatter NSCs
 hold on; % allow more than one plot in the figure
-scatter(sPhase1(:,1), sPhase1(:,2),20,'MarkerEdgeColor','c','MarkerFaceColor','none','LineWidth',2); % mark S-phase NSCs at time point1
-scatter(redivs(:,1), redivs(:,2),20,'MarkerEdgeColor','c','MarkerFaceColor','none','LineWidth',2); % mark re-dividing NSCs (being in S-phase at both time points)
+scatter(sPhase1(:,1), sPhase1(:,2),30,'MarkerEdgeColor','c','MarkerFaceColor','none','LineWidth',2); % mark S-phase NSCs at time point1
+scatter(redivs(:,1), redivs(:,2),30,'MarkerEdgeColor','c','MarkerFaceColor','none','LineWidth',2); % mark re-dividing NSCs (being in S-phase at both time points)
 set(gca,'xcolor','w','ycolor','w','xtick',[],'ytick',[]); % remove axes
 set(gca,'YDir','reverse') % inverse y-Axis as 0,0 is left upper corner for images
 camroll(-90) % adapt to the angle in the Figure
@@ -28,10 +28,10 @@ camroll(-90) % adapt to the angle in the Figure
 %% Plot Figure 2F
 fprintf('Creating Figure 2F ...\n') % show progress
 figure('Position',[200,200,600,700]); % create figure
-scatter(NSCs(:,1), NSCs(:,2),5,'MarkerEdgeColor','none','MarkerFaceColor',[0.75,0.75,0.75]); % scatter NSCs
+scatter(NSCs(:,1), NSCs(:,2),8,'MarkerEdgeColor','none','MarkerFaceColor',[0.75,0.75,0.75]); % scatter NSCs
 hold on; % allow more than one plot in the figure
-scatter(sPhase2(:,1), sPhase2(:,2),20,'MarkerEdgeColor','m','MarkerFaceColor','none','LineWidth',2); % mark S-phase 2 NSCs
-scatter(redivs(:,1), redivs(:,2),20,'MarkerEdgeColor','m','MarkerFaceColor','none','LineWidth',2); % mark re-dividing NSCs (being in S-phase at both time points)
+scatter(sPhase2(:,1), sPhase2(:,2),30,'MarkerEdgeColor','m','MarkerFaceColor','none','LineWidth',2); % mark S-phase 2 NSCs
+scatter(redivs(:,1), redivs(:,2),30,'MarkerEdgeColor','m','MarkerFaceColor','none','LineWidth',2); % mark re-dividing NSCs (being in S-phase at both time points)
 set(gca,'xcolor','w','ycolor','w','xtick',[],'ytick',[]); % remove axes
 set(gca,'YDir','reverse') % inverse y-Axis as 0,0 is left upper corner for images
 camroll(-90) % adapt to the angle in the Figure
@@ -39,14 +39,14 @@ camroll(-90) % adapt to the angle in the Figure
 %% Plot Figure 2G
 fprintf('Creating Figure 2G ...\n') % show progress
 figure('Position',[200,200,600,800]); % create figure
-scatter(NSCs(:,1), NSCs(:,2),5,'MarkerEdgeColor','none','MarkerFaceColor',[0.75,0.75,0.75]); % scatter NSCs
+scatter(NSCs(:,1), NSCs(:,2),8,'MarkerEdgeColor','none','MarkerFaceColor',[0.75,0.75,0.75]); % scatter NSCs
 hold on; % allow more than one plot in the figure
-scatter(sPhase1(:,1), sPhase1(:,2),20,'MarkerEdgeColor','c','MarkerFaceColor','none','LineWidth',2); % mark S-phase NSCs at Timepoint1
-scatter(sPhase2(:,1), sPhase2(:,2),20,'MarkerEdgeColor','m','MarkerFaceColor','none','LineWidth',2); % mark S-phase NSCs at Timepoint2
-scatter(redivs(:,1), redivs(:,2),20,'MarkerEdgeColor','c','MarkerFaceColor','none','LineWidth',2); % mark re-dividing NSCs
+scatter(sPhase1(:,1), sPhase1(:,2),30,'MarkerEdgeColor','c','MarkerFaceColor','none','LineWidth',2); % mark S-phase NSCs at Timepoint1
+scatter(sPhase2(:,1), sPhase2(:,2),30,'MarkerEdgeColor','m','MarkerFaceColor','none','LineWidth',2); % mark S-phase NSCs at Timepoint2
+scatter(redivs(:,1), redivs(:,2),30,'MarkerEdgeColor','c','MarkerFaceColor','none','LineWidth',2); % mark re-dividing NSCs
 set(gca,'xcolor','w','ycolor','w','xtick',[],'ytick',[]); % remove axes
 set(gca,'YDir','reverse') % inverse y-Axis as 0,0 is left upper corner for images
-legend('NSCs', 'NSCs in S-phase at Time 1','NSCs in S-phase at Time 2','FontSize',14,'Location','southoutside') % define legend
+legend('NSCs', 'NSCs in S-phase at Time 1','NSCs in S-phase at Time 2','FontSize',18,'Location','southoutside') % define legend
 legend boxoff % remove box around figure
 camroll(-90) % to adapt to the angle in the Figure
 
@@ -72,7 +72,7 @@ plot(r,mean(Krand),'k--','lineWidth',2) % plot mean of sampled K values
 xlabel('Radius [\mum]','Fontsize', 24) % define x-label
 ylabel('Discrete Ripley''s K','Fontsize', 24) % define y-label
 set(gca,'FontSize',24); % increase font size
-legend('Observed NSCs in S-phase','Random sampling','Location','northwest'); % define legend
+legend('Observed NSCs in S-phase','Random sampling','Location','northwest','FontSize',24); % define legend
 
 %% Plot Figure 2I
 fprintf('Creating Figure 2I ...\n') % show progress

@@ -48,11 +48,11 @@ if ~expData
     set(h(2),'Color',[.5,.5,.5])
     set(h(1),'Color',[.5,.5,.5])
     h(1).MarkerSize=20;
-    h(2).LineWidth=2;    
+    h(2).LineWidth=3;    
     h=ploterr(xRange(xRealCoords),maxLRad(xRealCoords),[],{radiiCI(xRealCoords,1),radiiCI(xRealCoords,2)},'k.');
 end
 h(1).MarkerSize=20;
-h(2).LineWidth=2;
+h(2).LineWidth=3;
 
 % fit constant to maxL radius values
 if expData
@@ -87,12 +87,12 @@ if ~expData
     set(h(2),'Color',[.5,.5,.5])
     set(h(1),'Color',[.5,.5,.5])
     h(1).MarkerSize=20;
-    h(2).LineWidth=2;
+    h(2).LineWidth=3;
     hold on;
     h=ploterr(xRange(xRealCoords),maxLStr(xRealCoords),[],{strengthsCI(xRealCoords,1),strengthsCI(xRealCoords,2)},'k.');
 end
 h(1).MarkerSize=20;
-h(2).LineWidth=2;
+h(2).LineWidth=3;
 
 % fit constant to maxL strength values 
 if expData

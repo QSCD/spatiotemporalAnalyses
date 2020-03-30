@@ -15,12 +15,12 @@ rng(37) % make plots reproducible
 fprintf('Creating Figure 1J ...\n') %show progress
 
 figure('Position',[200,200,600,700]); % create figure
-scatter(NSCs(:,1), NSCs(:,2),5,'MarkerEdgeColor','none','MarkerFaceColor',[0.75,0.75,0.75]); % scatter NSCs
+scatter(NSCs(:,1), NSCs(:,2),8,'MarkerEdgeColor','none','MarkerFaceColor',[0.75,0.75,0.75]); % scatter NSCs
 hold on; % allow more than one plot in the figure
-scatter(sPhase1(:,1), sPhase1(:,2),20,'MarkerEdgeColor','m','MarkerFaceColor','none'); % mark S-phase NSCs
+scatter(sPhase1(:,1), sPhase1(:,2),30,'MarkerEdgeColor','m','MarkerFaceColor','none','LineWidth',2); % mark S-phase NSCs
 set(gca,'xcolor','w','ycolor','w','xtick',[],'ytick',[]); % remove axes
 set(gca,'YDir','reverse') % inverse y-Axis as 0,0 is left upper corner for images
-legend('NSCs', 'NSCs in S-phase','FontSize',14) % define legend
+legend('NSCs', 'NSCs in S-phase','FontSize',18,'Location', 'ne') % define legend
 legend boxoff % remove box around figure
 
 %% Plot Figure 1K
@@ -46,7 +46,7 @@ plot(r,mean(Krand),'k--','lineWidth',2) % plot mean of sampled K values
 xlabel('Radius [\mum]','Fontsize', 24) % define x-label
 ylabel('Discrete Ripley''s K','Fontsize', 24) % define y-label
 set(gca,'FontSize',24);  % increase font size
-legend('Observed NSCs in S-phase','Random sampling','Location','northwest'); % define legend
+legend('Observed NSCs in S-phase','Random sampling','Location','northwest','FontSize',24); % define legend
 
 
 

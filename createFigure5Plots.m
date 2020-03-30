@@ -22,8 +22,9 @@ scatter([divLoc2.x], [divLoc2.y],25,'MarkerEdgeColor','c','MarkerFaceColor','c')
 % modify axes
 set(gca,'xcolor','w','ycolor','w','xtick',[],'ytick',[],'YTickLabel',[],'XTickLabel',[])
 axis off
+text(900,1150,{'p_{re-div}=0.38','      \Deltat=48h'},'Color', 'k','FontSize',24)  % include labelling interval as text
 % plot legend
-legend({'NSC','NSC in S-phase at time 1','NSC in S-phase at time 2'},'Position',[0.4,0.015,0.58,0.17],'FontSize',16)
+legend({'NSC','NSC in S-phase at Time 1','NSC in S-phase at Time 2'},'Position',[0.4,0.015,0.58,0.17],'FontSize',16)
 
 %% plot Figure 5B
 fprintf('Creating Figure 5B ...\n') % show progress
@@ -39,7 +40,7 @@ DsP = D(end-numel(divLoc1)+1:end,end-numel(divLoc2)-numel(divLoc1)+1:end-numel(d
 
 % Plot K values
 r=1:150; % define radius steps
-K=K/40000;Krand=Krand/40000; % reduce numbers for nicer y-axis in plot.
+K=K/1250;Krand=Krand/1250; % reduce numbers for nicer y-axis in plot.
 figure('Position',[200,200,750,500]); % create figure
 plot(r,K,'k','lineWidth',2); %plot observd K value
 hold on; % allow more than one plot in the figure
@@ -74,8 +75,9 @@ scatter([divLoc2.x], [divLoc2.y],25,'MarkerEdgeColor','c','MarkerFaceColor','c')
 % modify axes
 set(gca,'xcolor','w','ycolor','w','xtick',[],'ytick',[],'YTickLabel',[],'XTickLabel',[])
 axis off
+text(950,1160,{'p_{re-div}=0','\Deltat=48h'},'Color', 'k','FontSize',24)  % include labelling interval as text
 % plot legend
-legend({'NSC','NSC in S-phase at time 1','NSC in S-phase at time 2'},'Position',[0.4,0.015,0.58,0.17],'FontSize',16)
+legend({'NSC','NSC in S-phase at Time 1','NSC in S-phase at Time 2'},'Position',[0.4,0.015,0.58,0.17],'FontSize',16)
 
 %% plot Figure 5F
 fprintf('Creating Figure 5F ...\n') % show progress
@@ -91,7 +93,7 @@ DsP = D(end-numel(divLoc1)+1:end,end-numel(divLoc2)-numel(divLoc1)+1:end-numel(d
 
 % Plot K values
 r=1:150; % define time steps
-K=K/40000;Krand=Krand/40000; % reduce numbers for nicer y-axis in plot.
+K=K/1500;Krand=Krand/1500; % reduce numbers for nicer y-axis in plot.
 
 figure('Position',[200,200,750,500]); % create figure
 plot(r,K,'k','lineWidth',2); %plot observd K value
