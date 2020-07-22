@@ -1,104 +1,108 @@
 function createFigure2Plots(inputFolder)
-%%inputFolder='F:/Brains'; %modify
-%% load data
 fprintf('Creating Figure 2 ...\n') % show progress
-rng(pi) % make plots reproducible
-[D,NSCs,sPhase1,sPhase2,~,redivs]=loadData('Interval_32h_H1',inputFolder);
-
+%% 2A plot all brains in one figure
+fprintf('Creating Figure 2A ...\n') % show progress
 %%%
 %%% D: distance matrix between all cell coordinates
 %%% NSCs: all neural stem cells (NSCs) with x,y,z coordinates
 %%% sPhase1: all NSCs being in S-phase at the first time point
 %%% sPhase2: all NSCs being in S-phase at the second time point
 %%% redivs: all NSCs being in (different) S-phases at both time points
+%%% DLS: all NSCs sharing the same S-phase (double labelled S-phases)
 %%%
 
-
-%% Plot Figure 2E
-fprintf('Creating Figure 2E ...\n') % show progress
-figure('Position',[200,200,600,700]); % create figure
-scatter(NSCs(:,1), NSCs(:,2),8,'MarkerEdgeColor','none','MarkerFaceColor',[0.75,0.75,0.75]); % scatter NSCs
-hold on; % allow more than one plot in the figure
-scatter(sPhase1(:,1), sPhase1(:,2),30,'MarkerEdgeColor','c','MarkerFaceColor','none','LineWidth',2); % mark S-phase NSCs at time point1
-scatter(redivs(:,1), redivs(:,2),30,'MarkerEdgeColor','c','MarkerFaceColor','none','LineWidth',2); % mark re-dividing NSCs (being in S-phase at both time points)
-set(gca,'xcolor','w','ycolor','w','xtick',[],'ytick',[]); % remove axes
-set(gca,'YDir','reverse') % inverse y-Axis as 0,0 is left upper corner for images
-camroll(-90) % adapt to the angle in the Figure
-
-%% Plot Figure 2F
-fprintf('Creating Figure 2F ...\n') % show progress
-figure('Position',[200,200,600,700]); % create figure
-scatter(NSCs(:,1), NSCs(:,2),8,'MarkerEdgeColor','none','MarkerFaceColor',[0.75,0.75,0.75]); % scatter NSCs
-hold on; % allow more than one plot in the figure
-scatter(sPhase2(:,1), sPhase2(:,2),30,'MarkerEdgeColor','m','MarkerFaceColor','none','LineWidth',2); % mark S-phase 2 NSCs
-scatter(redivs(:,1), redivs(:,2),30,'MarkerEdgeColor','m','MarkerFaceColor','none','LineWidth',2); % mark re-dividing NSCs (being in S-phase at both time points)
-set(gca,'xcolor','w','ycolor','w','xtick',[],'ytick',[]); % remove axes
-set(gca,'YDir','reverse') % inverse y-Axis as 0,0 is left upper corner for images
-camroll(-90) % adapt to the angle in the Figure
-
-%% Plot Figure 2G
-fprintf('Creating Figure 2G ...\n') % show progress
-figure('Position',[200,200,600,800]); % create figure
-scatter(NSCs(:,1), NSCs(:,2),8,'MarkerEdgeColor','none','MarkerFaceColor',[0.75,0.75,0.75]); % scatter NSCs
-hold on; % allow more than one plot in the figure
-scatter(sPhase1(:,1), sPhase1(:,2),30,'MarkerEdgeColor','c','MarkerFaceColor','none','LineWidth',2); % mark S-phase NSCs at Timepoint1
-scatter(sPhase2(:,1), sPhase2(:,2),30,'MarkerEdgeColor','m','MarkerFaceColor','none','LineWidth',2); % mark S-phase NSCs at Timepoint2
-scatter(redivs(:,1), redivs(:,2),30,'MarkerEdgeColor','c','MarkerFaceColor','none','LineWidth',2); % mark re-dividing NSCs
-set(gca,'xcolor','w','ycolor','w','xtick',[],'ytick',[]); % remove axes
-set(gca,'YDir','reverse') % inverse y-Axis as 0,0 is left upper corner for images
-legend('NSCs', 'NSCs in S-phase at Time 1','NSCs in S-phase at Time 2','FontSize',18,'Location','southoutside') % define legend
-legend boxoff % remove box around figure
-camroll(-90) % to adapt to the angle in the Figure
-
-%% Plot Figure 2H
-fprintf('Creating Figure 2H ...\n') % show progress
-sPhase1Ids=logical(ismember(NSCs(:,4),1)+ismember(NSCs(:,4),4));
-sPhase2Ids=ismember(NSCs(:,4),2);
-DsP=D(sPhase1Ids,sPhase2Ids);
-
-%calculate discrete Ripley's K values
-%K = observed K values, Krand = K values from random sampling
-[K,Krand]=calculateRipleysK(NSCs, D, DsP);
-
-% Plot K values
-r=1:150; % define radius steps
-K=K/40000;Krand=Krand/40000; % reduce numbers for nicer y-axis in plot.
-figure('Position',[200,200,750,500]); % create figure
-plot(r,K,'k','lineWidth',2); %plot observd K value
-hold on; % allow more than one plot in the figure
-patch([r fliplr(r)], [quantile(Krand,0.05) fliplr(quantile(Krand,0.95))],...
-    [0.5,0.5,0.5],'FaceAlpha',.5,'EdgeColor','k'); % plot sampled K CIs
-plot(r,mean(Krand),'k--','lineWidth',2) % plot mean of sampled K values
-xlabel('Radius [\mum]','Fontsize', 24) % define x-label
-ylabel('Discrete Ripley''s K','Fontsize', 24) % define y-label
-set(gca,'FontSize',24); % increase font size
-legend('Observed NSCs in S-phase','Random sampling','Location','northwest','FontSize',24); % define legend
-
-%% Plot Figure 2I
-fprintf('Creating Figure 2I ...\n') % show progress
-rng(pi) % make plots reproducible
-figure('position',[100,100,1400,800]); % create figure
-hold on; % allow more than one plot in the figure
-
-%iterate over all four hemispheres having a 32h staining interval
-for i = 1:4 
-    [D,NSCs,~,~,~,~]=loadData(sprintf('Interval_32h_H%i',i),inputFolder); 
-    sPhase1Ids=logical(ismember(NSCs(:,4),1)+ismember(NSCs(:,4),4)); % find all S-phase1 and re-dividing cells
-    sPhase2Ids=ismember(NSCs(:,4),2); % find all S-phase2 cells
-    DsP=D(sPhase1Ids,sPhase2Ids); % extract distance matrix between sP1 and sP2 cells from D
-    %calculate discrete Ripley's K values
-    %K = observed K values, Krand = K values from random sampling
-    [K,Krand]=calculateRipleysK(NSCs, D, DsP); 
-    % plot observed K values depending on the 5% and 95% CI of randomly
-    % sampled K values
-    plot(1:150,(K-mean(Krand))./(quantile(Krand,0.90)-mean(Krand)),'k','LineWidth',2); 
+%define figure properties
+figure('Position',[498,47,950,950]);
+[ha,~]=tight_subplot(6,6,[.0001 .0001],[.0001 .0001],[.0001 .0001]);
+counter=0;
+%c={'k','w'}; %if black bg and white font
+c={'w','k'};%if white bg and black font
+intervals={'9h','18h','24h','32h','48h','72h'}; %labelling intervals
+files = dir(inputFolder);
+% iterate over all labelling intervals
+for  iv=1:numel(intervals)
+    interval=intervals{iv};
+    fileCount=count([files.name],sprintf('cells_Interval_%s',interval));
+    %iterate over all files of one labelling interval
+    for i=1:fileCount
+        [~,NSCs,sPhase1,sPhase2,DLS,redivs]=loadData(sprintf("Interval_%s_H%i",interval,i),inputFolder,1);
+        counter=counter+1;
+        axes(ha(counter)); % needed to manage tight_subplot function
+        hold on; % allow more than one plot in the subfigure
+        % scatter all different S-phase type cells
+        scatter(NSCs(:,1),NSCs(:,2),1,[0.75,0.75,0.75]);
+        scatter(sPhase1(:,1),sPhase1(:,2),5,'MarkerEdgeColor','c','MarkerFaceColor','c');
+        scatter(sPhase2(:,1),sPhase2(:,2),5,'MarkerEdgeColor','m','MarkerFaceColor','m');        
+        scatter(redivs(:,1),redivs(:,2),5,'MarkerEdgeColor','c','MarkerFaceColor','c'); 
+        scatter(DLS(:,1),DLS(:,2),5,'MarkerEdgeColor','c','MarkerFaceColor','c'); 
+        
+        % insert scale bar in upper right subplot
+        if strcmp(interval ,'18h') && i==2
+            plot([600,600+150],[650,650],c{2},'Linewidth',2.5)
+            text(440,700,'150\mum','Color', c{2},'FontSize',16)
+        end
+        
+        text(50,60,['\Deltat=',interval],'Color', c{2},'FontSize',16) % include staining interval as text
+        set(gca,'Color',c{1}) % set background color
+        set(gca,'YDir','reverse') % inverse y-Axis as 0,0 is left upper corner for images
+        set(gca,'ytick',[],'yticklabel',[],'xtick',[],'xticklabel',[]) % remove axes
+        xlim([0,775]) % fix x limits for comparability
+        ylim([0,775]) % fix y limits for comparability
+        box % add box around plot
+    end
+    
 end
-% plot gray area between -1 and 1 and the mean at 0
-patch([[0,150] fliplr([0,150])], [[-1,-1] fliplr([1,1])], [0.5,0.5,0.5],'FaceAlpha',.5)
-hline(0,'k--')
-hline(-1,'k')
-hline(1,'k')
-ylim([-3,6]) % set y limits
-xlabel('Radius [\mum]','Fontsize', 24) % define x-label
-ylabel('Standardized K','Fontsize', 24); % define y-label
-set(gca,'FontSize',24); % increase font size
+set(gca,'FontSize',16)
+%% load/generate data to plot 2B and C
+fprintf('Creating Figure 2B ...\n')
+% either load pre-optimized results
+% or uncomment the next line to call the parameterInference function to create the data yourself which may take 2h
+load(sprintf('%s/preprocessedData/expData.mat',extractBefore(inputFolder, '/Brains')),'parameters');
+%parameters=parameterInference(inputFolder,{'32'});
+%% plot Figure 2B
+% extract strength and radus properties from the parameter inference data
+optionsCI = PestoOptions();
+optionsCI.mode = 'silent';
+pi32=parameters{32};
+pi32=getParameterConfidenceIntervals(pi32,0.95,optionsCI);
+maxLStr=pi32.MS.par(2,1); % get strength maximum likelihood value
+maxLRad=pi32.MS.par(1,1); % get radius maximum likelihood value
+strengthsCI(1) = pi32.CI.S(2,1); % get strength lower CI value
+strengthsCI(2) = pi32.CI.S(2,2); % get strength upper CI value
+radiiCI(1) = pi32.CI.S(1,1); % get radius lower CI value
+radiiCI(2) = pi32.CI.S(1,2); % get radius upper CI value
+
+figure; % new figure
+dscatter(pi32.S.par(1,:)',pi32.S.par(2,:)'); 
+hold on; % allow more than one plot in the figure
+colormap copper
+% plot a line which defines random values at y=1
+hl=hline(1); 
+hl.LineWidth=2;
+hl.Color='k';
+hl.XData=[0,250];
+
+ylabel('Strength') % define y-label
+xlabel('Radius [\mum]') % define x-label
+ylim([0.8,1.6]) % set y limits
+xlim([0,250]) % set x limits
+text(180,1.5,'\Deltat=32h','Color', 'k','FontSize',24)  % include labelling interval as text
+% plot maximum likelihood values with CIs as error bars
+h=ploterr(maxLRad,maxLStr,{radiiCI(1),radiiCI(2)},{strengthsCI(1),strengthsCI(2)},'k.');
+h(1).MarkerSize=20;
+h(2).LineWidth=3;
+h(3).LineWidth=3;
+h=colorbar('north','Position',...
+    [0.222619047619048 0.857142857142857 0.29702380952381 0.0507936507936509],...
+    'Ticks',[0.02 0.95],...
+    'TickLength',0,...
+    'TickLabels',{'low','high'});
+text(34, 1.48,'Density','Color', 'k','FontSize',24)  % include labelling interval as text
+set(gca,'FontSize',24) % increase font size
+
+%% plot Figure 2CD
+fprintf('Creating Figure 2C and 2D ...\n') % show progress
+plotParameterInference(parameters,1);
+
+end
+

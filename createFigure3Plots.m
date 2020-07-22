@@ -1,103 +1,133 @@
 function createFigure3Plots(inputFolder)
+% load data from excel sheet
 fprintf('Creating Figure 3 ...\n') % show progress
-%% 3A plot all brains in one figure
-fprintf('Creating Figure 3A ...\n') % show progress
 %%%
 %%% D: distance matrix between all cell coordinates
 %%% NSCs: all neural stem cells (NSCs) with x,y,z coordinates
-%%% sPhase1: all NSCs being in S-phase at the first time point
-%%% sPhase2: all NSCs being in S-phase at the second time point
 %%% redivs: all NSCs being in (different) S-phases at both time points
-%%% DLS: all NSCs sharing the same S-phase (double labelled S-phases)
+%%% DLS: all NSCs sharing the same S-phase
 %%%
+% read data to plot from table1
+data = xlsread(sprintf('%s/Table1',inputFolder));
+%% 3F
+fprintf('Creating Figure 3F ...\n') % show progress
+figure('OuterPosition',[174 624 576 513]);
+% generate two vectores with tps and groups for plotting
+tps = [repmat(9,4,1);repmat(18,4,1);repmat(24,11,1)];
+gs=[ones(4,1);repmat(2,4,1);repmat(3,11,1)];
 
-%define figure properties
-figure('Position',[498,47,950,950]);
-[ha,~]=tight_subplot(6,6,[.0001 .0001],[.0001 .0001],[.0001 .0001]);
-counter=0;
-%c={'k','w'}; %if black bg and white font
-c={'w','k'};%if white bg and black font
-intervals={'9h','18h','24h','32h','48h','72h'}; %labelling intervals
+% extract DLS proportions
+DLS=data([1:8,13:23],5)./data([1:8,13:23],2)*100;
+
+groups = splitapply( @(x){x}, DLS, (gs) );
+g = tps;
+% first plot the box plot to determine plot positions on x-axis
+boxplot(DLS,g,'colors','k','positions',[9,18,24]);
+
+hold on; % allow more than one plot in the figure
+% second plot single data points
+sh=plotSpread(gca,groups,'xValues',[9,18,24]);
+set(sh{1},'color',[0.5,0.5,0.5],'markerSize',20);
+% replot boxplot to overlay points
+h=boxplot(DLS,g,'colors','k','positions',[9,18,24]);
+set(h,{'linew'},{2})
+
+% modify x-axis labels
+xticks([0,20,40,60,80]);
+xticklabels([0,20,40,60,80]);
+
+ylabel({'Double labelled'; 'S-phases (DLS) [%]'}); % Create ylabel
+xlabel('Labelling interval \Deltat [h]'); % Create xlabel
+% adapt axis limits
+xlim([0 80]);
+ylim([0 100]);
+box('on');
+set(gca,'FontSize',22);
+%% 3T
+fprintf('Creating Figure 3T ...\n') % show progress
+figure('OuterPosition',[174 624 576 513]);
+% generate two vectores with tps and groups for plotting
+tps = [repmat(18,4,1);repmat(24,11,1);repmat(32,4,1);repmat(48,4,1);repmat(72,5,1)];
+gs=[ones(4,1);repmat(2,11,1);repmat(3,4,1);repmat(4,4,1);repmat(5,5,1)];
+% extract re-dividing cell proportions
+redivs=data([5:8,13:end],4)./data([5:8,13:end],2)*100;
+groups = splitapply( @(x){x}, redivs, (gs) );
+
+% first plot the box plot to determine plot positions on x-axis
+boxplot(redivs,tps,'positions',[18,24,32,48,72],'colors','k');
+hold on; % allow more than one plot in the figure
+% plot all single data points
+sh=plotSpread(gca,groups,'xValues',[18,24,32,48,72]);
+set(sh{1},'color',[0.5,0.5,0.5],'markerSize',20);
+% replot boxplot to overlay points
+h=boxplot(redivs,tps,'positions',[18,24,32,48,72],'colors','k');
+set(h,{'linew'},{2})
+% define xticks below the boxplots
+xticks([0,20,40,60,80]);
+xticklabels([0,20,40,60,80]);
+
+ylabel('Re-dividing NSCs [%]');% Create ylabel
+xlabel('Labelling interval \Deltat [h]');% Create xlabel
+xlim([0 80]); % Define x limits
+ylim([0 27]); % Define y limits
+box('on');
+set(gca,'FontSize',22);
+
+%% 3U
+fprintf('Creating Figure 3U ...\n') % show progress
+rng(1)
+redivsSim=[];
+intervals = {'24h','32h','48h','72h'};
 files = dir(inputFolder);
-% iterate over all labelling intervals
+%iterate over labelling intervals  having redivs
 for  iv=1:numel(intervals)
     interval=intervals{iv};
     fileCount=count([files.name],sprintf('cells_Interval_%s',interval));
-    %iterate over all files of one labelling interval
-    for i=1:fileCount
-        [~,NSCs,sPhase1,sPhase2,DLS,redivs]=loadData(sprintf("Interval_%s_H%i",interval,i),inputFolder,1);
-        counter=counter+1;
-        axes(ha(counter)); % needed to manage tight_subplot function
-        hold on; % allow more than one plot in the subfigure
-        % scatter all different S-phase type cells
-        scatter(NSCs(:,1),NSCs(:,2),1,[0.75,0.75,0.75]);
-        scatter(sPhase1(:,1),sPhase1(:,2),5,'MarkerEdgeColor','c','MarkerFaceColor','c');
-        scatter(sPhase2(:,1),sPhase2(:,2),5,'MarkerEdgeColor','m','MarkerFaceColor','m');        
-        scatter(redivs(:,1),redivs(:,2),5,'MarkerEdgeColor','c','MarkerFaceColor','c'); 
-        scatter(DLS(:,1),DLS(:,2),5,'MarkerEdgeColor','c','MarkerFaceColor','c'); 
-        
-        % insert scale bar in upper right subplot
-        if strcmp(interval ,'18h') && i==2
-            plot([600,600+150],[650,650],c{2},'Linewidth',2.5)
-            text(440,700,'150\mum','Color', c{2},'FontSize',16)
-        end
-        
-        text(50,60,['\Deltat=',interval],'Color', c{2},'FontSize',16) % include staining interval as text
-        set(gca,'Color',c{1}) % set background color
-        set(gca,'YDir','reverse') % inverse y-Axis as 0,0 is left upper corner for images
-        set(gca,'ytick',[],'yticklabel',[],'xtick',[],'xticklabel',[]) % remove axes
-        xlim([0,775]) % fix x limits for comparability
-        ylim([0,775]) % fix y limits for comparability
-        box % add box around plot
-    end
     
+    for i=1:fileCount
+        %load data and determine sPhase1 and sPhase2 cells
+        %%%
+        %%% NSCs: all neural stem cells with x,y,z coordinates
+        %%%
+        
+        [~,NSCs,~,~,~,~]=loadData(sprintf("Interval_%s_H%i",interval,i),inputFolder,1);
+        sP1count=sum(logical(ismember(NSCs(:,4),1)+ismember(NSCs(:,4),4)+ismember(NSCs(:,4),3))); % find all S-phase1 and re-dividing cells
+        sP2count=sum(logical(ismember(NSCs(:,4),2)+ismember(NSCs(:,4),4)+ismember(NSCs(:,4),3))); % find all S-phase2 cells
+        % draw random S-Phases
+         randCellNrs1 = datasample(1:size(NSCs,1),sP1count,'Replace',false);
+          randCellNrs2 = datasample(1:size(NSCs,1),sP2count,'Replace',false);
+          % check drawings for redivs and calculate fraction to S-phase 1
+          % count
+          redivsSim=[redivsSim;numel(intersect(randCellNrs1,randCellNrs2))*100/sP1count];
+    end
 end
-set(gca,'FontSize',16)
-%% load/generate data to plot 3B and C
-fprintf('Creating Figure 3B ...\n')
-% either load pre-optimized results
-% or uncomment the next line to call the parameterInference function to create the data yourself which may take 2h
-load(sprintf('%s/preprocessedData/expData.mat',extractBefore(inputFolder, '/Brains')),'parameters');
-%parameters=parameterInference(inputFolder,{'32'});
-%% plot Figure 3B
-% extract strength and radus properties from the parameter inference data
-optionsCI = PestoOptions();
-optionsCI.mode = 'silent';
-pi32=parameters{32};
-pi32=getParameterConfidenceIntervals(pi32,0.95,optionsCI);
-maxLStr=pi32.MS.par(2,1); % get strength maximum likelihood value
-maxLRad=pi32.MS.par(1,1); % get radius maximum likelihood value
-strengthsCI(1) = pi32.CI.S(2,1); % get strength lower CI value
-strengthsCI(2) = pi32.CI.S(2,2); % get strength upper CI value
-radiiCI(1) = pi32.CI.S(1,1); % get radius lower CI value
-radiiCI(2) = pi32.CI.S(1,2); % get radius upper CI value
+% extract re-dividing cell proportions
+redivs=data([6,13:14,16:end],4)./data([6,13:14,16:end],2)*100;
+figure;
+% create labels to plot divs and re-divs
+g = [zeros(length(redivsSim), 1); ones(length(redivs), 1)];
+boxplot([redivsSim;redivs],g,'colors','k','Width',0.7); %plot it first for legend reasons
 
-figure; % new figure
-% scatter posterior sampling values of radii and strengths
-scatter(pi32.S.par(1,:)',pi32.S.par(2,:)',0.5,[0.6,0.6,0.6]); 
 hold on; % allow more than one plot in the figure
-% plot a line which defines random values at y=1
-hl=hline(1); 
-hl.LineWidth=2;
-hl.Color='k';
-hl.XData=[0,250];
+% plot single data points
+sh=plotSpread(gca,{redivsSim,redivs}); 
+set(sh{1},'color',[0.5,0.5,0.5],'markerSize',20);
 
-ylabel('Strength') % define y-label
-xlabel('Radius [\mum]') % define x-label
-ylim([0.8,1.5]) % set y limits
-xlim([0,250]) % set x limits
-text(180,1.4,'\Deltat=32h','Color', 'k','FontSize',24)  % include labelling interval as text
-% plot maximum likelihood values with CIs as error bars
-h=ploterr(maxLRad,maxLStr,{radiiCI(1),radiiCI(2)},{strengthsCI(1),strengthsCI(2)},'k.');
-h(1).MarkerSize=20;
-h(2).LineWidth=3;
-h(3).LineWidth=3;
+% replot boxplot to overlay points
+h=boxplot([redivsSim;redivs],g,'colors','k','Width',0.7); 
+set(h,{'linew'},{2})
 
-set(gca,'FontSize',24) % increase font size
+% label the boxplots
+set(gca,'XTickLabel',{'Simulated','Observed'},'FontSize',22)
 
-%% plot Figure 3CD
-fprintf('Creating Figure 3C and 3D ...\n') % show progress
-plotParameterInference(parameters,1);
+% modify y axis
+ylim([0 27]);
+yticks([0,10,20]);
+yticklabels([0,10,20]);
+ylabel({'Re-dividing NSCs [%]'},'FontSize',22)
 
-end
-
+set(gca,'FontSize',22); % increase font size
+% test for significance and plot the respective amount of stars
+[~,y]=kstest2(redivsSim',redivs');
+s=sigstar([1,2],y);
+set(s(2),'fontSize',15)
